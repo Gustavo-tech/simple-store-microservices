@@ -20,12 +20,13 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
     {
         try
         {
-            Product p = new(request.Title, request.Description, request.Quantity);
+            Product p = new(request.Title, request.Description, request.Quantity, request.Price);
             await _productRepo.AddProductAsync(p);
         }
         catch (Exception e)
         {
             _logger.LogError(e.Message);
+            throw;
         }
 
         return Unit.Value;

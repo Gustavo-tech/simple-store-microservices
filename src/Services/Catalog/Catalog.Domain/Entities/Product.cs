@@ -17,6 +17,8 @@ public class Product : Entity
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new Exception("Title is required");
+
+            _title = value;
         }
     }
 
@@ -48,11 +50,12 @@ public class Product : Entity
     {
     }
 
-    public Product(string title, string description, int quantity)
+    public Product(string title, string description, int quantity, decimal price)
     {
         Title = title;
         Description = description;
         Quantity = quantity;
+        Price = price;
     }
 
     public void ProductSold(int quantity)
