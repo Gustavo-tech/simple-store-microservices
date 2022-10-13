@@ -1,5 +1,7 @@
 ﻿using Catalog.API.Requests;
 using Catalog.Application.Features.Commands.CreateProduct;
+using Catalog.Application.Features.Queries;
+using Catalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +18,22 @@ public class ProductController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    {
+        try
+        {
+            GetProductsQuery query = new();
+            var products = await _mediator.Send(query);
+
+            return Ok(products);
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest req)
     {
@@ -26,9 +44,9 @@ public class ProductController : ControllerBase
 
             return Ok("Product created successfully");
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return Problem(e.Message);
+            return Problem();
         }
     }
 }
