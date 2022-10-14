@@ -58,6 +58,15 @@ public class Product : Entity
         Price = price;
     }
 
+    public Product(int id, string title, string description, int quantity, decimal price)
+    {
+        Id = id;
+        Title = title;
+        Description = description;
+        Quantity = quantity;
+        Price = price;
+    }
+
     public void ProductSold(int quantity)
     {
         if (quantity <= 0)

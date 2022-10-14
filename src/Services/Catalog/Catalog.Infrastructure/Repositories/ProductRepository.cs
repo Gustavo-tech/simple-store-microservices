@@ -35,8 +35,13 @@ public class ProductRepository : RepositoryBase, IProductRepository
 
     public async Task UpdateProductAsync(Product product)
     {
-        string command = "update products set title = :Title, description = :Description, quantity = :Quantity, price = :Price)";
-        await ExecuteAsync(command, new { product.Title, product.Description, product.Quantity, product.Price });
+        string command = @"update products set 
+                             title = :Title, 
+                             description = :Description, 
+                             quantity = :Quantity, 
+                             price = :Price
+                           where id = :Id";
+        await ExecuteAsync(command, new { product.Title, product.Description, product.Quantity, product.Price, product.Id });
     }
 
     public async Task DeleteProductAsync(int id)

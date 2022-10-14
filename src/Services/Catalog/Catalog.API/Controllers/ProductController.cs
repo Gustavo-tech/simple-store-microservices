@@ -1,5 +1,6 @@
 ﻿using Catalog.API.Requests;
 using Catalog.Application.Features.Commands.CreateProduct;
+using Catalog.Application.Features.Commands.UpdateProduct;
 using Catalog.Application.Features.Queries;
 using Catalog.Domain.Entities;
 using MediatR;
@@ -43,6 +44,22 @@ public class ProductController : ControllerBase
             await _mediator.Send(command);
 
             return Ok("Product created successfully");
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest req)
+    {
+        try
+        {
+            UpdateProductCommand command = new(req.Id, req.Title, req.Description, req.Quantity, req.Price);
+            await _mediator.Send(command);
+
+            return Ok("Product updated successfully");
         }
         catch (Exception)
         {
