@@ -1,5 +1,6 @@
 ﻿using Catalog.API.Requests;
 using Catalog.Application.Features.Commands.CreateProduct;
+using Catalog.Application.Features.Commands.DeleteProduct;
 using Catalog.Application.Features.Commands.UpdateProduct;
 using Catalog.Application.Features.Queries.GetProductById;
 using Catalog.Application.Features.Queries.GetProducts;
@@ -81,6 +82,22 @@ public class ProductController : ControllerBase
             await _mediator.Send(command);
 
             return Ok("Product updated successfully");
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct([FromRoute] int id)
+    {
+        try
+        {
+            DeleteProductCommand command = new(id);
+            await _mediator.Send(command);
+
+            return Ok("Product deleted");
         }
         catch (Exception)
         {

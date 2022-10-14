@@ -46,7 +46,7 @@ public class ProductRepository : RepositoryBase, IProductRepository
 
     public async Task DeleteProductAsync(int id)
     {
-        string command = "delete products where id = :Id";
+        string command = "delete from products where id = :Id";
         await ExecuteAsync(command, new { Id = id });
     } 
 }
