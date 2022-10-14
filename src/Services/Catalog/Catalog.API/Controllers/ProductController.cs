@@ -1,7 +1,8 @@
 ﻿using Catalog.API.Requests;
 using Catalog.Application.Features.Commands.CreateProduct;
 using Catalog.Application.Features.Commands.UpdateProduct;
-using Catalog.Application.Features.Queries;
+using Catalog.Application.Features.Queries.GetProductById;
+using Catalog.Application.Features.Queries.GetProducts;
 using Catalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,26 @@ public class ProductController : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Product>> GetProduct([FromRoute] int id)
+    {
+        try
+        {
+            GetProductByIdQuery query = new(id);
+
+            Product p = await _mediator.Send(query);
+
+            if (p is null)
+                return NotFound();
+
+            return Ok(p);
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest req)
     {
@@ -43,7 +64,7 @@ public class ProductController : ControllerBase
             CreateProductCommand command = new(req.Title, req.Description, req.Quantity, req.Price);
             await _mediator.Send(command);
 
-            return Ok("Product created successfully");
+            return StatusCode(201, "Product created successfully");
         }
         catch (Exception)
         {

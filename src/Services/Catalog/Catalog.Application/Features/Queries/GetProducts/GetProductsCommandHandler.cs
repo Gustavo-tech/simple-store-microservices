@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Application.Features.Queries;
+namespace Catalog.Application.Features.Queries.GetProducts;
 
 public class GetProductsCommandHandler : IRequestHandler<GetProductsQuery, IEnumerable<Product>>
 {
