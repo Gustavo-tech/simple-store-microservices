@@ -10,9 +10,9 @@ public class Product : Entity
 
     public string? Description { get; private set; }
 
-    public string? Title 
-    { 
-        get { return _title; } 
+    public string? Title
+    {
+        get { return _title; }
         private set
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -37,7 +37,7 @@ public class Product : Entity
     public decimal Price
     {
         get { return _price; }
-        private set 
+        private set
         {
             if (value < 0)
                 throw new Exception("Price must be greater than zero");
