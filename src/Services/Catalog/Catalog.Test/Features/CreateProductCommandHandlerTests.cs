@@ -27,7 +27,7 @@ public class CreateProductCommandHandlerTests
     }
 
     [Test]
-    public async Task TestHandle_CommandIsValid_ShouldCallAddProductRepo()
+    public async Task TestHandle_CommandIsValid_ShouldCallAddProduct()
     {
         CreateProductCommand command = new("Product", "", 10, 10);
         CancellationTokenSource source = new();
