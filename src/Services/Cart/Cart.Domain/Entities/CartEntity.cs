@@ -2,7 +2,7 @@
 
 namespace Cart.Domain.Entities;
 
-public class Cart : EntityBase
+public class CartEntity : EntityBase
 {
     private string? _userName;
 
@@ -20,18 +20,18 @@ public class Cart : EntityBase
 
     private List<CartProduct> Products { get; set; } = new();
 
-    public Cart(string userName)
+    public CartEntity(string userName)
     {
         _userName = userName;
     }
 
-    public Cart(string userName, List<CartProduct> products)
+    public CartEntity(string userName, List<CartProduct> products)
     {
         UserName = userName;
         Products = products;
     }
 
-    public Cart AddProduct(string productId, int quantity)
+    public CartEntity AddProduct(string productId, int quantity)
     {
         if (quantity > 0)
         {
@@ -42,7 +42,7 @@ public class Cart : EntityBase
         return this;
     }
 
-    public Cart RemoveProduct(string productId, int quantity)
+    public CartEntity RemoveProduct(string productId, int quantity)
     {
         CartProduct? cp = Products.Where(p => p.ProductId == productId).FirstOrDefault();
 
@@ -55,6 +55,12 @@ public class Cart : EntityBase
                 cp.Quantity -= quantity;
         }
 
+        return this;
+    }
+
+    public CartEntity Checkout()
+    {
+        Products = new();
         return this;
     }
 }
