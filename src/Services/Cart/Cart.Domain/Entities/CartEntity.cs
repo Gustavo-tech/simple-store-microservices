@@ -39,8 +39,20 @@ public class CartEntity : EntityBase
     {
         if (quantity > 0)
         {
-            CartProduct cp = new(productId, quantity);
-            Products.Add(cp);
+            if (Products.Any(x => x.ProductId == productId))
+            {
+                foreach (CartProduct p in Products)
+                {
+                    if (p.ProductId == productId)
+                        p.Quantity += quantity;
+                }
+            }
+
+            else
+            {
+                CartProduct cp = new(productId, quantity);
+                Products.Add(cp);
+            }
         }
 
         return this;
