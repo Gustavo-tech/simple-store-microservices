@@ -18,17 +18,21 @@ public class CartEntity : EntityBase
         }
     }
 
-    private List<CartProduct> Products { get; set; } = new();
+    public List<CartProduct> Products { get; private set; } = new();
 
-    public CartEntity(string userName)
+    public CartEntity()
     {
-        _userName = userName;
+    }
+
+    public CartEntity(string? userName)
+    {
+        UserName = userName;
     }
 
     public CartEntity(string userName, List<CartProduct> products)
     {
         UserName = userName;
-        Products = products;
+        Products = products?.Count > 0 ? products : new();
     }
 
     public CartEntity AddProduct(string productId, int quantity)

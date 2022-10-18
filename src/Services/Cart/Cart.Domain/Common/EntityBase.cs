@@ -1,6 +1,11 @@
-﻿namespace Cart.Domain.Common;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Cart.Domain.Common;
 
 public class EntityBase
 {
-    protected string? Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
 }
