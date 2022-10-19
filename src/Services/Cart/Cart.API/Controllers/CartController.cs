@@ -1,6 +1,7 @@
 ﻿using Cart.API.Requests;
 using Cart.Application.Features.Commands.AddProduct;
 using Cart.Application.Features.Commands.CreateCart;
+using Cart.Application.Features.Commands.RemoveAllProducts;
 using Cart.Application.Features.Commands.RemoveProduct;
 using Cart.Application.Features.Queries.GetCart;
 using Cart.Domain.Entities;
@@ -77,6 +78,24 @@ public class CartController : ControllerBase
         try
         {
             CartEntity entity = await _mediator.Send(req);
+
+            if (entity is null)
+                return NotFound();
+
+            return Ok(entity);
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
+    [HttpDelete("RemoveAll")]
+    public async Task<ActionResult<CartEntity>> RemoveAll([FromBody] RemoveAllProductsCommand command)
+    {
+        try
+        {
+            CartEntity entity = await _mediator.Send(command);
 
             if (entity is null)
                 return NotFound();

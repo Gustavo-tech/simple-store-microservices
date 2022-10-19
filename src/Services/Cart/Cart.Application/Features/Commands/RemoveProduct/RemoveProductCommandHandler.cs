@@ -24,14 +24,22 @@ public class RemoveProductCommandHandler : IRequestHandler<RemoveProductCommand,
 
     public async Task<CartEntity?> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
     {
-        CartEntity entity = await _cartRepository.GetCartAsync(request.Username);
-
-        if (entity is not null)
+        try
         {
-            entity.RemoveProduct(request.ProductId, request.Quantity);
-            await _cartRepository.UpdateCartAsync(entity);
-        }
+            CartEntity entity = await _cartRepository.GetCartAsync(request.Username);
 
-        return entity;
+            if (entity is not null)
+            {
+                entity.RemoveProduct(request.ProductId, request.Quantity);
+                await _cartRepository.UpdateCartAsync(entity);
+            }
+
+            return entity;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"An error happened while removing a product, {e.Message}");
+            throw;
+        }
     }
 }
