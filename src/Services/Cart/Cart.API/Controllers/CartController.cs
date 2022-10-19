@@ -1,6 +1,7 @@
 ﻿using Cart.API.Requests;
 using Cart.Application.Features.Commands.AddProduct;
 using Cart.Application.Features.Commands.CreateCart;
+using Cart.Application.Features.Commands.RemoveProduct;
 using Cart.Application.Features.Queries.GetCart;
 using Cart.Domain.Entities;
 using MediatR;
@@ -59,10 +60,28 @@ public class CartController : ControllerBase
     {
         try
         {
-            AddProductCommand command = new(req.Username, req.ProductId.ToString(), req.Quantity);
+            AddProductCommand command = new(req.Username, req.ProductId, req.Quantity);
             await _mediator.Send(command);
 
             return Ok("Product added");
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
+    [HttpDelete("RemoveProduct")]
+    public async Task<ActionResult<CartEntity>> RemoveProduct([FromBody] RemoveProductCommand req)
+    {
+        try
+        {
+            CartEntity entity = await _mediator.Send(req);
+
+            if (entity is null)
+                return NotFound();
+
+            return Ok(entity);
         }
         catch (Exception)
         {

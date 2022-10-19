@@ -12,7 +12,6 @@ public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand>
     private readonly ICartRepository _cartRepository;
     private readonly ILogger<CreateCartCommandHandler> _logger;
     
-
     public CreateCartCommandHandler(ICartRepository cartRepository, ILogger<CreateCartCommandHandler> logger)
     {
         _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));

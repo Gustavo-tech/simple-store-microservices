@@ -35,7 +35,7 @@ public class CartEntity : EntityBase
         Products = products?.Count > 0 ? products : new();
     }
 
-    public CartEntity AddProduct(string productId, int quantity)
+    public CartEntity AddProduct(int productId, int quantity)
     {
         if (quantity > 0)
         {
@@ -58,7 +58,19 @@ public class CartEntity : EntityBase
         return this;
     }
 
-    public CartEntity RemoveProduct(string productId, int quantity)
+    public CartEntity RemoveProduct(int productId)
+    {
+        CartProduct? cp = Products.Where(p => p.ProductId == productId).FirstOrDefault();
+
+        if (cp != null)
+        {
+            Products = Products.Where(p => p.ProductId != productId).ToList();
+        }
+
+        return this;
+    }
+
+    public CartEntity RemoveProduct(int productId, int quantity)
     {
         CartProduct? cp = Products.Where(p => p.ProductId == productId).FirstOrDefault();
 

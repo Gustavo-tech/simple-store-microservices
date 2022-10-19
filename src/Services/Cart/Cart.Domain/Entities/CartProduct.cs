@@ -2,15 +2,15 @@
 
 public class CartProduct
 {
-	private string? _productId;
+	private int _productId;
 	private int _quantity;
 
-	public string? ProductId
+	public int ProductId
 	{
 		get { return _productId; }
 		private set 
 		{
-			if (string.IsNullOrWhiteSpace(value))
+			if (value < 1)
 				throw new Exception("Invalid product id");
 
 			_productId = value;
@@ -27,7 +27,7 @@ public class CartProduct
 		}
 	}
 
-	public CartProduct(string productId, int quantity)
+	public CartProduct(int productId, int quantity)
 	{
 		ProductId = productId;
 		Quantity = quantity;
