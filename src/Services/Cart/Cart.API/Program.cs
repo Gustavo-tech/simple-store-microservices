@@ -25,6 +25,7 @@ builder.Services.AddMassTransit(config =>
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host(builder.Configuration["EventBusSettings:Host"]);
+        cfg.ConfigureEndpoints(ctx);
     });
 });
 

@@ -20,7 +20,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
     {
         try
         {
-            Product p = await _productRepo.GetByIdAsync(request.Id.ToString());
+            Product p = await _productRepo.GetByIdAsync(request.Id);
             return p;
         }
         catch (Exception e)

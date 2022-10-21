@@ -33,7 +33,7 @@ public class CheckoutCommandHandler : IRequestHandler<CheckouCommand, CartEntity
             CartEntity cart = await _cartRepository.GetCartAsync(request.Username);
             CartItem[] items = new CartItem[cart.Products.Count];
 
-            for (int i = 0; i <= cart.Products.Count; i++)
+            for (int i = 0; i < cart.Products.Count; i++)
             {
                 items[i] = new(cart.Products[i].ProductId, cart.Products[i].Quantity);
             }

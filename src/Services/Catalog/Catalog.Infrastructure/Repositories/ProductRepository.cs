@@ -10,10 +10,10 @@ public class ProductRepository : RepositoryBase, IProductRepository
     {
     }
 
-    public async Task<Product> GetByIdAsync(string id)
+    public async Task<Product> GetByIdAsync(int id)
     {
         string query = "select * from products where id = :Id";
-        return await QueryFirstOrDefaultAsync<Product>(query, new { Id = int.Parse(id) });
+        return await QueryFirstOrDefaultAsync<Product>(query, new { Id = id });
     }
 
     public async Task<IEnumerable<Product>> GetProductsAsync()

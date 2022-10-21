@@ -1,5 +1,6 @@
 ﻿using Cart.API.Requests;
 using Cart.Application.Features.Commands.AddProduct;
+using Cart.Application.Features.Commands.Checkout;
 using Cart.Application.Features.Commands.CreateCart;
 using Cart.Application.Features.Commands.RemoveAllProducts;
 using Cart.Application.Features.Commands.RemoveProduct;
@@ -65,6 +66,22 @@ public class CartController : ControllerBase
             await _mediator.Send(command);
 
             return Ok("Product added");
+        }
+        catch (Exception)
+        {
+            return Problem();
+        }
+    }
+
+    [HttpPost("Checkout/{userName}")]
+    public async Task<ActionResult<CartEntity>> Checkout([FromRoute] string userName)
+    {
+        try
+        {
+            CheckouCommand command = new(userName);
+            CartEntity cart = await _mediator.Send(command);
+
+            return Ok(cart);
         }
         catch (Exception)
         {
