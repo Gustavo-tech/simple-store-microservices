@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.7" />
     <PackageReference Include="MediatR" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cart.Domain\Cart.Domain.csproj" />
+    <ProjectReference Include="..\..\..\MessageBrocker\EventBus.Messages\EventBus.Messages.csproj" />
   </ItemGroup>
 
 </Project>
