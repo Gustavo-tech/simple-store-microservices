@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cart.Infrastructure", "Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cart.Test", "Services\Cart\Cart.Test\Cart.Test.csproj", "{213CB6F8-AD61-44C5-A868-322C15B7154D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBrocker", "MessageBrocker", "{34664973-2E4D-48C0-A265-26F385B94565}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "MessageBrocker\EventBus.Messages\EventBus.Messages.csproj", "{450AF410-6916-410C-AFDE-2511D79B0B36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{213CB6F8-AD61-44C5-A868-322C15B7154D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{213CB6F8-AD61-44C5-A868-322C15B7154D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{213CB6F8-AD61-44C5-A868-322C15B7154D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450AF410-6916-410C-AFDE-2511D79B0B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450AF410-6916-410C-AFDE-2511D79B0B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450AF410-6916-410C-AFDE-2511D79B0B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450AF410-6916-410C-AFDE-2511D79B0B36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +100,7 @@ Global
 		{7BAC3857-CB3C-4E22-A5B7-04DCC692FE75} = {5BD97062-2767-47B2-844F-9A1493F0665B}
 		{3060DA5E-50DA-4397-AE48-2D67542D24A2} = {5BD97062-2767-47B2-844F-9A1493F0665B}
 		{213CB6F8-AD61-44C5-A868-322C15B7154D} = {5BD97062-2767-47B2-844F-9A1493F0665B}
+		{450AF410-6916-410C-AFDE-2511D79B0B36} = {34664973-2E4D-48C0-A265-26F385B94565}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {306DB5F3-C8B5-4B67-8555-622511C95BBF}

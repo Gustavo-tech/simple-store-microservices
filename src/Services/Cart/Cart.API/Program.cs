@@ -2,6 +2,7 @@ using Cart.Application.Abstractions;
 using Cart.Infrastructure.Repositories;
 using Cart.Application.Extensions;
 using Cart.Application.Settings;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureServices();
 
+// Repositories
 builder.Services.AddScoped<ICartRepository, CartRepository>(_ => new CartRepository(builder.Configuration.GetConnectionString("MongoDb")));
+
+// RabbitMQ
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:Host"]);
+    });
+});
 
 var app = builder.Build();
 
