@@ -2,6 +2,12 @@ version: '3.4'
 
 services:
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   catalogdb:
     image: postgres
     container_name: catalogdb
@@ -28,21 +34,62 @@ services:
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     container_name: catalog.api
+    depends_on:
+      - catalogdb
+      - rabbitmq
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:Postgres=Host=catalogdb;Port=5432;Database=catalog;User Id=admin;Password=admin
+      - EventBusSettings:Host=amqp://guest:guest@rabbitmq:5672
     ports:
       - "8000:80"
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
+  cartdb:
+    image: mongo
+    container_name: cartdb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://cartdb:27017/
+
+  cart.api:
+    image: ${DOCKER_REGISTRY-}cartapi
+    container_name: cart.api
+    depends_on:
+      - cartdb
+      - rabbitmq
+      - catalog.api
+    ports:
+      - 8001:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:MongoDb=mongodb://cartdb:27017/
+      - EventBusSettings:Host=amqp://guest:guest@rabbitmq:5672
+      - ApplicationSettings:CatalogUrl=http://catalog.api
+    build:
+      context: .
+      dockerfile: Services/Cart/Cart.API/Dockerfile
+
 volumes:
   postgres_data:
+  mongo_data:
+
 
 networks:
   my_docker_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.5.0.0/16 
+        - subnet: 10.5.0.0/16
